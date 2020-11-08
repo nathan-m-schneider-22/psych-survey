@@ -1,11 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import path from 'path';
+import path, { parse } from 'path';
 
 import mysql from 'mysql';
 import dotenv from 'dotenv'
-
+import {getQuery} from './parseData'
 
 dotenv.config();
 
@@ -13,15 +13,15 @@ dotenv.config();
 var con = mysql.createConnection({
     host: process.env.HOST,
     user: process.env.DBUSER,
-    password: process.env.PASSWORD
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE
   });
   
   con.connect(function(err) {
     if (err) throw err;
-    console.log("Connected!");
+    console.log("Connected to database!");
   });
   
-
   const app = express();
 
 app.use(express.static('public'));
@@ -35,24 +35,15 @@ app.use(bodyParser.json());
 app.post('/data', (req, res) => {
     console.log(req.body)
 
-
-    /*
-    con.connect(function(err) {
-        if (err) throw err;
-        console.log("Connected!");
-        var sql = "INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')";
-        con.query(sql, function (err, result) {
-          if (err) throw err;
-          console.log("1 record inserted");
+        const query = getQuery(req.body.data)
+        con.query(query, function (err, result) {
+          if (err) console.log(err);
+          else console.log("Data recorded");
         });
-      });
-      */
     res.send('Data received!');
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(`${__dirname}/../../dist/index.html`));
-});
+
 
 
 // START THE SERVER
