@@ -5,7 +5,7 @@ import path, { parse } from 'path';
 
 import mysql from 'mysql';
 import dotenv from 'dotenv'
-import {getQuery} from './parseData'
+import {makeQuery} from './parseData'
 
 dotenv.config();
 
@@ -35,7 +35,7 @@ app.use(bodyParser.json());
 app.post('/data', (req, res) => {
     console.log(req.body)
 
-        const query = getQuery(req.body.data)
+        const query = makeQuery(req.body.data)
         con.query(query, function (err, result) {
           if (err) console.log(err);
           else console.log("Data recorded");
