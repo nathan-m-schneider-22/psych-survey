@@ -96,4 +96,4 @@ function save_data(data) {
    - Enter each variable from your `.env` file, it should look like this:
    - <img width="1076" alt="Screen Shot 2020-11-09 at 5 04 50 PM" src="https://user-images.githubusercontent.com/48935297/98601973-c1bce200-22ad-11eb-9f2d-ca81a42fe400.png">
   5) Once the environment updates, go back and enter `eb open` to view the app. This URL is now accessible everywhere, and can be configured in AWS settings. 
-   
+  6) After making changes to the code, commit your changes, then `eb deploy` to deploy them. View the survey with `eb open`. 
