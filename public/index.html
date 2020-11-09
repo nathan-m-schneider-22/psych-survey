@@ -31,114 +31,10 @@
     var consent = {
         type: "html-button-response",
         stimulus: "<h4>Please consider this information carefully before deciding whether to participate in this research.</h4><h4>The purpose of this research is to examine how people consider possibilities. We are simply interested in your thought process. The study will take less than 10 minutes to complete, and you will receive $2.00 on Amazon Mechanical Turk. There are no anticipated risks associated with participating in this study. The effects of participating should be comparable to those you would ordinarily experience from viewing a computer monitor and using a mouse or keyboard for a similar amount of time.</h4> <h4>Your participation in this study is completely voluntary and you may refuse to participate or you may choose to withdraw at any time without penalty or loss of benefits to which you are otherwise entitled. Your participation in this study will remain confidential. No personally identifiable information will be associated with your data. Also, all analyses of the data will be averaged across all the participants, so your individual responses will never be specifically analyzed. </h4> <h4>Agreement: The nature and purpose of this research have been sufficiently explained and I agree to participate in this study. I understand that I am free to withdraw at any time without incurring any penalty. Please consent by clicking the button below to continue. Otherwise, please exit the study at this time.</h4>",
-        //<h4>If you have questions or concerns about your participation or payment or want to request a summary of research findings, please contact... For any other problems related to this study, you may also contact the faculty member supervising this work: Fiery Cushman, cushman@fas.harvard.edu.</h4> <h4>For questions, concerns, suggestions, or complaints that have not been or cannot be addressed by the researcher, or to report research-related harm, please contact ..... Phone: 617-496-2847. Email: cuhs@fas.harvard.edu</h4> <h4>Please print or save a copy of this form for your records.</h4> 
         choices: ['Submit']
     };
     timeline.push(consent);
 
-    //welcome
-    var welcome = {
-	    type: "html-keyboard-response",
-	    stimulus: "<div class='center-content'><br><br><br><br>Welcome to the HIT. Press any key to begin.",
-    };
-    timeline.push(welcome);
-
-    //get mturk ID
-    var get_id = {
-	    type: 'survey-text',
-        preamble: ["Please enter your Amazon Mechanical Turk Worker ID below.<br><br>If you do not enter your ID accurately, we will not be able to pay you."],
-        questions: [{prompt: "Worker ID:", name: "subject_id", required: true}],
-    }
-    timeline.push(get_id);
-
-    //add ID and exp type to data
-    //var subject_id = jsPsych.data.getLastTrialData().select('responses').Q0;
-    var experiment_type = jsPsych.randomization.sampleWithoutReplacement(['response', 'generation'], 1)[0];
-    jsPsych.data.addProperties({
-        exp_type: experiment_type
-    });
-    
-    //array of prompts
-    var prompts = [{ cat: 'zoo animals', qlist: ['What zoo animal eats the most for its body weight?', 'What zoo animal has the shortest lifespan?', 'What zoo animal would you least want to have in your car?', 'What zoo animal has the biggest feet relative to its body size?', 'What zoo animal spends the most time awake?']},
-            { cat: 'breakfast foods', qlist: ['What breakfast food is worst to eat before working out?', 'What breakfast food is eaten the most in October?', 'What breakfast food is the most colorful?', 'What breakfast food takes the longest to eat?', 'What breakfast food is the most expensive?']},
-            { cat: 'chain restaurants', qlist: ['What chain restaurant has the most items on their menu?', 'What chain restaurant is the most expensive?', 'What chain restaurant has the most colorful logo?', 'What chain restaurant has the worst desserts?', 'What chain restaurant tends to be the dirtiest?']},
-            { cat: 'kitchen appliances', qlist: ['What kitchen appliance is the noisiest?', 'What kitchen appliance is used the least?', 'What kitchen appliance breaks the most?', 'What kitchen appliance is used most in the winter?', 'What kitchen appliance requires the least energy?']},
-            { cat: 'holidays', qlist: ['What holiday is the least religious?', 'What holiday involves the most drinking?', 'What holiday has the most different names?', 'What holiday has the worst food associated with it?', 'What holiday is the most forgettable?']},
-            { cat: 'sports', qlist: ['What sport requires the most agility?', 'What sport is easiest to learn?', 'What sport has been around the longest?', 'What sport requires the most teamwork?', 'What sport requires the most gear?']},
-            { cat: 'types of furniture', qlist: ['What piece of furniture would you be most surprised to see in a kitchen?', 'What piece of furniture can support the least amount of weight?', 'What piece of furniture do people donate the most often?', 'What piece of furniture would make the best weapon?', 'What piece of furniture is the most flammable?']},
-            { cat: 'clothing items', qlist: ['What clothing item is the most expensive for its weight?', 'What clothing item do people keep the longest?', 'What clothing item comes in the fewest colors?', 'What clothing item is most often purchased online?', 'What clothing item is borrowed most frequently?']},
-            { cat: 'vegetables', qlist: ['What vegetable do people eat most often with breakfast?', 'What vegetable comes in the most colors?', 'What vegetable is heaviest for its size?', 'What vegetable is eaten the least in spring?', 'What vegetable has the most sugar?']},
-            { cat: 'jobs', qlist: ['What job requires the most talking?', 'What job is the most common one to have?', 'What job has been around the longest?', 'What job requires the best eyesight?', 'What job do people stay in for the longest amount of time?']}]    
-    var shuffled_prompts = jsPsych.randomization.sampleWithoutReplacement(prompts, 10);
-    
-    //set instructions
-    var generation_instructions = {
-        type: "html-keyboard-response",
-        stimulus: "In this experiment, you will be asked to list things in various categories. Please list whatever comes to mind, as it comes to mind.<br><br>Press any key to begin."
-    };
-    var response_instructions = {
-        type: "html-keyboard-response",
-        stimulus: "In this experiment, you will be asked to answer questions, and then to reflect on the process which led you to your answer.<br><br> Press any key to begin."
-    };
-    if(experiment_type == "generation") {
-            timeline.push(generation_instructions)
-        }
-    else {
-        timeline.push(response_instructions)
-    }
-    
-    //set randomized procedure
-    for (var i = 0; i < 10; i++) {
-        //generation
-        generation_trial = {
-            type: 'survey-text',
-            preamble: "<br>For the following category, list things as they come to mind, with one answer per text box.<br>",
-            var: cat = shuffled_prompts[i].cat,
-            questions: [
-                { prompt: cat, name: cat, required: "true"},
-                { prompt: "", required: "true"},
-                { prompt: "", required: "true"},
-                { prompt: "", required: "true"},
-                { prompt: "", required: "true"},
-                { prompt: "", required: "true"},
-                { prompt: "", required: "true"},
-                { prompt: "", required: "true"},
-                { prompt: "", required: "true"},
-                { prompt: "", required: "true"},
-            ],
-        }
-        if(experiment_type == "generation") {
-            timeline.push(generation_trial)
-        }
-        
-        //response
-        response_trial_1 = {
-            type: 'survey-text',
-            var: q = jsPsych.randomization.sampleWithoutReplacement(shuffled_prompts[i].qlist, 1),
-            preamble: q,
-            questions: [
-                { prompt: "", name: q, required: "true"}
-            ],
-        }
-        response_trial_2 = {
-            type: 'survey-text',
-            preamble: "<br>Please list as many things as you can remember considering before you made your decision (you should include what you actually chose).<br><br>It's completely okay to list them if you thought about them, but then immediately realized they weren't actually good options. Type \"n/a\" in any unused text boxes.",
-            questions: [
-                {prompt: "", name: shuffled_prompts[i].cat, required: true},
-                {prompt: "", required: true},
-                {prompt: "", required: true},
-                {prompt: "", required: true},
-                {prompt: "", required: true},
-                {prompt: "", required: true},
-                {prompt: "", required: true},
-                {prompt: "", required: true}
-            ],
-        }
-        if(experiment_type == "response") {
-            timeline.push(response_trial_1)
-            timeline.push(response_trial_2)
-        }
-    }
 
     function save_data(data) {
         url = location+"data"
@@ -150,90 +46,12 @@
         }));
     }
 
-    function reformat_data(data) {
-        data2 = {};
-        console.log(data)
-        save_data(data)
-        /*
-        data2.exp_type = remove_quotes(data[0].exp_type);
-        responses = str_to_dict(data[2].responses);
-        data2.subject_id = responses.subject_id;
-        if(data2.exp_type == "generation") {
-            for (var i=4; i<14; i++) {
-                data2.order = i-3;
-                responses = str_to_dict(data[i].responses);
-                data2.category = Object.keys(responses)[0];
-                data2.response = Object.values(responses);
-                data2.rt = remove_quotes(data[i].rt);
-                console.log(data2);
-                save_data(data2);
-            }
-        }
-        else {
-            for (var i=4; i<24; i+=2) {
-                data2.order = i-3;
-                responses1 = str_to_dict(data[i].responses);
-                data2.question = Object.keys(responses1)[0];
-                data2.response = Object.values(responses1);
-                data2.rt_response = remove_quotes(data[i].rt);
-                responses2 = str_to_dict(data[i+1].responses);
-                data2.category = Object.keys(responses2)[0];
-                data2.considerations = Object.values(responses2);
-                data2.rt_considerations = remove_quotes(data[i+1].rt);
-                console.log(data2);
-                save_data(data2);
-            }
-        }
-        */
-    }
-
-    function str_to_dict(str) {
-        dict = {};
-        if(str[0] == "{") {
-            key = "";
-            for(start = 2; start<str.length; start++) {
-                end = start;
-                while(true) {
-                    if(str[end]== "\"") {
-                        if(str[end+1] == ":") {
-                            key = str.substring(start, end);
-                            start = end+2;
-                            break;
-                        }
-                        else if((str[end+1] == ",") ||(str[end+1] == "}")) {
-                            dict[key] = str.substring(start, end);
-                            start = end+2;
-                            break;
-                        }
-                    }
-                    end++;
-                }
-            }
-        }
-        return dict;
-    }
-
-    function remove_quotes(str) {
-        if((str[0] == str[str.length-1] == "\"") && (str.length > 1))
-            return str.substring(1, str.length-1);
-        else
-            return str;
-    }
-
-    function remove_spaces(str) {
-        for(i=0; i<str.length; i++)
-            if(str[i] == " ")   str[i] = "_";
-        return str;
-    }
-    timeline = [];
-    timeline.push(consent);
-
     //run
     jsPsych.init({
         timeline,
         on_finish: function() {
             jsPsych.data.displayData();
-            reformat_data(jsPsych.data.get().values());
+            save_data(jsPsych.data.get().values());
         }
     })
 
