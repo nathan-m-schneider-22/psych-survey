@@ -33,13 +33,13 @@ app.use(bodyParser.json());
 
 // default index route
 app.post('/data', (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
 
         const query = makeQuery(req.body.data)
-        con.query(query, function (err, result) {
-          if (err) console.log(err);
-          else console.log("Data recorded");
-        });
+        // con.query(query, function (err, result) {
+        //   if (err) console.log(err);
+        //   else console.log("Data recorded");
+        // });
     res.send('Data received!');
 });
 
