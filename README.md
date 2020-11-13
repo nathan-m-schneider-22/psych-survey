@@ -80,7 +80,8 @@ function save_data(data) {
 ```
  - [public/custom_package.js](public/custom_package.js) Any extra code you need for the survey can be placed here and run. 
  - [parseData.js](parseData.js) This file is for processing the raw JSON data send from the survey, and returning a single SQL query for inserting the necessary values. See https://www.sqlservertutorial.net/sql-server-basics/sql-server-insert-multiple-rows/ fSetup the environment with or more info 
- 
+ ## Running Locally
+ To run the code locally, start the server with `yarn start`. Once running, navigate to http://localhost:9090 to take the survey, and test locally. You can log information with `console.log()`. 
  
  ## Deployment
  Once you have installed the EB CLI, (contact me if having trouble with that), follow these steps to deploy it to AWS. This process follows [this](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create_deploy_nodejs_express.html) approach. 
