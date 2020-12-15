@@ -9,8 +9,9 @@ function helper(a) {
 export function makeQuery(data) {
 
     const consent_data = data[0]
-    const time_elapsed = consent_data.time_elapsed
-    console.log(time_elapsed)
+
+    var {button_pressed, time_elapsed} = consent_data
     // Use JSON.parse for dictionary strings
+    console.log(button_pressed,time_elapsed)
     return "INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')"
 }

@@ -5,24 +5,23 @@ import path, { parse } from 'path';
 
 import mysql from 'mysql';
 import dotenv from 'dotenv'
-import {makeQuery} from './parseData'
+import { makeQuery } from './parseData'
 
 dotenv.config();
 
+const pool = mysql.createPool({
+  host: process.env.HOST,
+  user: process.env.DBUSER,
+  database: process.env.DATABASE,
+  password: process.env.PASSWORD
+});
 
-var con = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.DBUSER,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE
-  });
-  
-  con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected to database!");
-  });
-  
-  const app = express();
+// con.connect(function(err) {
+//   if (err) throw err;
+//   console.log("Connected to database!");
+// });
+
+const app = express();
 
 app.use(express.static('public'));
 
@@ -33,14 +32,14 @@ app.use(bodyParser.json());
 
 // default index route
 app.post('/data', (req, res) => {
-    // console.log(req.body)
+  // console.log(req.body)
 
-        const query = makeQuery(req.body.data)
-        con.query(query, function (err, result) {
-          if (err) console.log(err);
-          else console.log("Data recorded");
-        });
-    res.send('Data received!');
+  const query = makeQuery(req.body.data)
+  pool.query(query, function (err, result) {
+    if (err) console.log(err);
+    else console.log("Data recorded");
+  });
+  res.send('Data received!');
 });
 
 
