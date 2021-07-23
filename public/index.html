@@ -1,22 +1,25 @@
-
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Dartmouth College</title>
-        <script src="jspsych-6.1.0/jspsych.js"></script>
-        <script src="jspsych-6.1.0/plugins/jspsych-survey-text.js"></script>
-        <script src="jspsych-6.1.0/plugins/jspsych-html-keyboard-response.js"></script>
-        <script src="jspsych-6.1.0/plugins/jspsych-html-button-response.js"></script>
-        <link href="jspsych-6.1.0/css/jspsych.css" rel="stylesheet" type="text/css"></link>
-        <!-- <script src = "jquery.plug-in.js" type = "text/javascript"></script> -->
-        <script.src = 'https://code.jquery.com/jquery-3.4.1.min.js'></script>
-    </head>
-    <body>
-        <p>The Survey Body</p>
-    </body>
-    <script src="/custom_package.js"> </script>
 
-    <script>
+<head>
+    <title>Dartmouth College</title>
+    <script src="jspsych-6.3.1/jspsych.js"></script>
+    <script src="jspsych-6.3.1/plugins/jspsych-survey-text.js"></script>
+    <script src="jspsych-6.3.1/plugins/jspsych-html-keyboard-response.js"></script>
+    <script src="jspsych-6.3.1/plugins/jspsych-html-button-response.js"></script>
+    <link href="jspsych-6.3.1/css/jspsych.css" rel="stylesheet" type="text/css">
+    </link>
+    <!-- <script src = "jquery.plug-in.js" type = "text/javascript"></script> -->
+    <script.src='https: //code.jquery.com/jquery-3.4.1.min.js'>
+        </script>
+</head>
+
+<body>
+    <p>The Survey Body</p>
+</body>
+<script src="/custom_package.js"> </script>
+
+<script>
 
     /*
     // meta-variables
@@ -37,7 +40,7 @@
 
 
     function save_data(data) {
-        url = location+"data"
+        url = location + "data"
         var xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
@@ -49,11 +52,12 @@
     //run
     jsPsych.init({
         timeline,
-        on_finish: function() {
+        on_finish: function () {
             jsPsych.data.displayData();
             save_data(jsPsych.data.get().values());
         }
     })
 
-    </script>
+</script>
+
 </html>
